@@ -10,8 +10,14 @@ import Home from './pages/Home.vue'; // Import Home component
 
 // Define routes
 const routes = [
-  { path: '/', component: Home }, // Default route for the home page
-  { path: '/:pathMatch(.*)*', component: Home } // Catch-all route for any URL
+  {
+    path: '/',
+    component: Home,
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: '/', // Redirect all unmatched routes to home
+  },
 ];
 
 // Create the router
