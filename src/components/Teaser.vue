@@ -89,7 +89,7 @@ const addTask = async () => {
     alert("Task added successfully!");
     setTimeout(() => {
       window.location.reload();
-    }, 3000);
+    }, 100);
   } catch (error) {
     console.error("Error adding task:", error);
   }
