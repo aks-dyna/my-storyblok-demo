@@ -7,23 +7,25 @@
       </h1>
 
       <!-- Add Task Section -->
-      <div
-        class="mx-auto w-full max-w-4xl bg-white shadow-md border rounded-lg px-6 py-8 flex flex-col items-center"
-      >
+      <div class="mx-auto w-full max-w-4xl bg-white shadow-md border rounded-lg px-6 py-8 flex flex-col items-center">
         <h2 class="text-xl sm:text-2xl font-semibold text-blue-700 mb-6">
           Add a New Task
         </h2>
-        <input
-          v-model="newTask"
+        <input v-model="newTask"
           class="w-full p-4 text-lg bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter your task name..."
-        />
-        <button
-          @click="addTask"
-          class="mt-6 w-full sm:w-auto px-6 py-3 text-lg bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition"
-        >
+          placeholder="Enter your task name..." />
+        <button @click="addTask"
+          class="mt-6 w-full sm:w-auto px-6 py-3 text-lg bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
           Add Task
         </button>
+        <!-- Loading State -->
+        <div v-if="loading" class="flex justify-center items-center mt-4">
+          <svg class="animate-spin h-6 w-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
@@ -35,8 +37,10 @@ import axios from "axios";
 
 const props = defineProps({ blok: Object });
 const newTask = ref("");
+const loading = ref(false); // Tracks the loading state
 
 const addTask = async () => {
+  loading.value = true; // Start loading
   if (!newTask.value.trim()) {
     alert("Task name cannot be empty!");
     return;
@@ -92,6 +96,8 @@ const addTask = async () => {
     }, 100);
   } catch (error) {
     console.error("Error adding task:", error);
+  } finally {
+    loading.value = false; // Stop loading
   }
 };
 </script>
